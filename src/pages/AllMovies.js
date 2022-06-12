@@ -1,36 +1,27 @@
 import MovieList from "../components/movies/MovieList";
-import {useEffect, useState} from "react";
-import axios from "axios";
-import {getMovies} from "../services/MovieService";
+import {useEffect, useState, useContext} from "react";
 
-const DUMMY_DATA = [
-    {
-        id: '1',
-        title: 'Titanic',
-        image: 'https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg',
-        description:
-            'A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.',
-    },
-    {
-        id: '2',
-        title: 'Avatar',
-        image:
-            'https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtYTJmNjg3Nzk5MzRiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_.jpg',
-        description:
-            'A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.',
-    },
-]
+import {getMovies} from "../services/MovieService";
+import {USER_ID} from "../App";
+import WatchedContext from "../store/WatchedContext";
+
 
 function AllMoviesPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedMovies, setLoadedMovies] = useState([]);
+    const watchedContext = useContext(WatchedContext);
 
     useEffect(() => {
         setIsLoading(true);
         let mounted = true;
-        getMovies()
+        getMovies(USER_ID)
             .then(res => {
                 setIsLoading(false);
+                res.data.forEach(movie => {
+                    if (movie.userData && movie.userData.watched){
+                        watchedContext.addWatched(movie.movie)
+                    }
+                })
                 setLoadedMovies(res.data);
             })
         return () => { mounted = false; }

@@ -4,7 +4,6 @@ import WatchedMovies from "./pages/WatchedMovies";
 import AllMovies from "./pages/AllMovies";
 import NewMovies from "./pages/NewMovies";
 
-export const BACKEND_HOST = 'https://projectr-backend.herokuapp.com'
 
 function App() {
     return (

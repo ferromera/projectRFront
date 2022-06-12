@@ -2,8 +2,12 @@ import axios from "axios";
 import {BACKEND_HOST} from "../App";
 
 
-export function getMovies() {
-    return axios.get(`${BACKEND_HOST}/movies`);
+export function getMovies(userId) {
+    return axios.get(`${BACKEND_HOST}/movies?userId=${userId}`);
+}
+
+export function getWatchedMovies(userId) {
+    return axios.get(`${BACKEND_HOST}/movies/watched/${userId}`);
 }
 
 export function postMovie(json) {

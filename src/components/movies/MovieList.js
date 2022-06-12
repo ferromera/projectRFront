@@ -6,11 +6,9 @@ function MovieList(props) {
         <ul className={classes.list}>
             {props.movies.map((movie) => (
                 <MovieItem
-                    key={movie.id}
-                    id={movie.id}
-                    image={movie.image}
-                    title={movie.title}
-                    description={movie.description}
+                    key={movie.movie.id}
+                    movie={movie.movie}
+                    userData={movie.userData}
                 />
             ))}
         </ul>
