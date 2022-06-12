@@ -1,0 +1,30 @@
+.success {
+    background-color: #93E57E;
+    border: 2px solid #57a241;
+    color: #41852c;
+    text-align: center;
+    margin: 15px 0px;
+    border-radius: 6px;
+    line-height: 2;
+    font-size: 1rem;
+    font-weight: bold;
+
+    animation:signup-response 0.5s 1;
+    -webkit-animation:signup-response 0.5s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay:2s;
+    -webkit-animation-delay:2s; /* Safari and Chrome */
+    -webkit-animation-fill-mode: forwards;
+
+}
+
+@keyframes signup-response{
+    from {opacity :1;}
+    to {opacity :0;}
+}
+
+@-webkit-keyframes signup-response{
+    from {opacity :1;}
+    to {opacity :0;}
+}
