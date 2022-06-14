@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/projectRFront/static/css/main.d2f2f35f.css",
+    "main.js": "/projectRFront/static/js/main.a5fc3b92.js",
+    "index.html": "/projectRFront/index.html",
+    "main.d2f2f35f.css.map": "/projectRFront/static/css/main.d2f2f35f.css.map",
+    "main.a5fc3b92.js.map": "/projectRFront/static/js/main.a5fc3b92.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d2f2f35f.css",
+    "static/js/main.a5fc3b92.js"
+  ]
+}
