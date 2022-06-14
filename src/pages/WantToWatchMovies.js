@@ -1,5 +1,5 @@
 import {useEffect, useState, useContext} from "react";
-import {getWantToSeeMovies} from "../services/MovieService";
+import {getWantToWatchMovies} from "../services/MovieService";
 import {USER_ID} from "../App";
 import MovieList from "../components/movies/MovieList";
 import WatchedContext from "../store/WatchedContext";
@@ -14,12 +14,12 @@ function WantToWatchMovies() {
         setIsLoading(true);
         let mounted = true;
         if (isUpdated) {
-            getWantToSeeMovies(USER_ID)
+            getWantToWatchMovies(USER_ID)
                 .then(res => {
                     setIsLoading(false);
                     res.data.forEach(movie => {
-                        if (movie.userData.wantToSee)
-                            watchedContext.addWantToSee(movie.movie);
+                        if (movie.userData.wantToWatch)
+                            watchedContext.addWantToWatch(movie.movie);
                     });
                     setLoadedMovies(res.data);
                 })

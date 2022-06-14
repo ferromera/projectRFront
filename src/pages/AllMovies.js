@@ -18,8 +18,11 @@ function AllMoviesPage() {
             .then(res => {
                 setIsLoading(false);
                 res.data.forEach(movie => {
-                    if (movie.userData && movie.userData.watched){
-                        watchedContext.addWatched(movie.movie)
+                    if (movie.userData) {
+                        if (movie.userData.watched)
+                            watchedContext.addWatched(movie.movie)
+                        if (movie.userData.wantToWatch)
+                            watchedContext.addWantToWatch(movie.movie)
                     }
                 })
                 setLoadedMovies(res.data);

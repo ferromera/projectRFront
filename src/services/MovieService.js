@@ -10,7 +10,7 @@ export function getWatchedMovies(userId) {
     return axios.get(`${BACKEND_HOST}/movies/watched/${userId}`);
 }
 
-export function getWantToSeeMovies(userId) {
+export function getWantToWatchMovies(userId) {
     return axios.get(`${BACKEND_HOST}/movies/wantToWatch/${userId}`);
 }
 
