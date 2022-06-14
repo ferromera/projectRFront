@@ -6,11 +6,11 @@ import NewMovies from "./pages/NewMovies";
 import WantToWatchMovies from "./pages/WantToWatchMovies";
 
 //Prod
-//export const BACKEND_HOST = 'https://projectr-backend.herokuapp.com'
-//export const USER_ID = 4;
+export const BACKEND_HOST = 'https://projectr-backend.herokuapp.com'
+export const USER_ID = 4;
 //Dev
-export const BACKEND_HOST = 'http://localhost:8080'
-export const USER_ID = 3;
+//export const BACKEND_HOST = 'http://localhost:8080'
+//export const USER_ID = 3;
 
 function App() {
     return (
