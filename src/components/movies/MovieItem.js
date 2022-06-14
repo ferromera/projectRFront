@@ -39,6 +39,7 @@ function MovieItem(props) {
                         <h3>{props.movie.title}</h3>
                         <p>{props.movie.description}</p>
                     </div>
+                    <MovieItemButtons movie={props.movie}/>
                 </div>
             </Card>
         </li>
