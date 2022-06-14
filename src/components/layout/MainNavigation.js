@@ -9,16 +9,16 @@ function MainNavigation() {
             <nav>
                 <ul>
                     <li>
-                        <Link to='/movies'>All</Link>
+                        <Link to='/projectRFront/movies'>All</Link>
                     </li>
                     <li>
-                        <Link to='/movies/watched'>Watched</Link>
+                        <Link to='/projectRFront/movies/watched'>Watched</Link>
                     </li>
                     <li>
-                        <Link to='/movies/wantToWatch'>Want to watch</Link>
+                        <Link to='/projectRFront/movies/wantToWatch'>Want to watch</Link>
                     </li>
                     <li>
-                        <Link to='/movies/new'>New</Link>
+                        <Link to='/projectRFront/movies/new'>New</Link>
                     </li>
                 </ul>
             </nav>

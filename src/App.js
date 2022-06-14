@@ -16,10 +16,10 @@ function App() {
     return (
         <Layout>
             <Routes>
-                <Route path='/movies/' element={<AllMovies/>}/>
-                <Route path='/movies/watched' element={<WatchedMovies/>}/>
-                <Route path='/movies/wantToWatch' element={<WantToWatchMovies/>}/>
-                <Route path='/movies/new' element={<NewMovies/>}/>
+                <Route path='/projectRFront/movies/' element={<AllMovies/>}/>
+                <Route path='/projectRFront/movies/watched' element={<WatchedMovies/>}/>
+                <Route path='/projectRFront/movies/wantToWatch' element={<WantToWatchMovies/>}/>
+                <Route path='/projectRFront/movies/new' element={<NewMovies/>}/>
             </Routes>
         </Layout>
     );
