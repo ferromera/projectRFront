@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/projectRFront/static/css/main.d2f2f35f.css",
-    "main.js": "/projectRFront/static/js/main.5d650f89.js",
+    "main.js": "/projectRFront/static/js/main.edc1211c.js",
     "index.html": "/projectRFront/index.html",
     "main.d2f2f35f.css.map": "/projectRFront/static/css/main.d2f2f35f.css.map",
-    "main.5d650f89.js.map": "/projectRFront/static/js/main.5d650f89.js.map"
+    "main.edc1211c.js.map": "/projectRFront/static/js/main.edc1211c.js.map"
   },
   "entrypoints": [
     "static/css/main.d2f2f35f.css",
-    "static/js/main.5d650f89.js"
+    "static/js/main.edc1211c.js"
   ]
 }
