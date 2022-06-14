@@ -8,7 +8,6 @@ function NewMeetupsPage() {
     const [postStatus, setPostStatus] = useState(null);
 
     function addMovieHandler(movieData) {
-        console.log(JSON.stringify(movieData))
         postMovie(movieData)
             .then(result => {
                 setPostStatus(true)

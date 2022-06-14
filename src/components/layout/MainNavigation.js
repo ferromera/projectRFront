@@ -15,6 +15,9 @@ function MainNavigation() {
                         <Link to='/movies/watched'>Watched</Link>
                     </li>
                     <li>
+                        <Link to='/movies/wantToWatch'>Want to watch</Link>
+                    </li>
+                    <li>
                         <Link to='/movies/new'>New</Link>
                     </li>
                 </ul>

@@ -4,13 +4,13 @@ import {postUserMovie} from "../../services/UserMovieService";
 import {USER_ID} from "../../App";
 import WatchedContext from "../../store/WatchedContext";
 import {useContext} from "react";
+import MovieItemButtons from "./MovieItemButtons";
 
 function MovieItem(props) {
     const watchedContext = useContext(WatchedContext);
     const itemIsWatched = watchedContext.itemIsWatched(props.movie.id);
 
     function updateWatchedCall() {
-        console.log('posting ' + !itemIsWatched)
         watchedContext.setUpdated(false)
         const json = {
             userId: USER_ID,
@@ -39,10 +39,11 @@ function MovieItem(props) {
                         <h3>{props.movie.title}</h3>
                         <p>{props.movie.description}</p>
                     </div>
-                    <div className={classes.actions}>
-                        <button className={itemIsWatched ? classes.watched : classes.notwatched }
-                                onClick={watchedHandler}>Watched</button>
-                    </div>
+                    <MovieItemButtons movie={props.movie}/>
+                    {/*<div className={classes.actions}>*/}
+                    {/*    <button className={itemIsWatched ? classes.watched : classes.notwatched }*/}
+                    {/*            onClick={watchedHandler}>Watched</button>*/}
+                    {/*</div>*/}
                 </div>
             </Card>
         </li>

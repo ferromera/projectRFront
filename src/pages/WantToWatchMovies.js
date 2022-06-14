@@ -1,10 +1,10 @@
 import {useEffect, useState, useContext} from "react";
-import {getWatchedMovies} from "../services/MovieService";
+import {getWantToSeeMovies} from "../services/MovieService";
 import {USER_ID} from "../App";
 import MovieList from "../components/movies/MovieList";
 import WatchedContext from "../store/WatchedContext";
 
-function WatchedMovies() {
+function WantToWatchMovies() {
     const watchedContext = useContext(WatchedContext);
     const isUpdated = watchedContext.updated
     const [isLoading, setIsLoading] = useState(true);
@@ -14,12 +14,12 @@ function WatchedMovies() {
         setIsLoading(true);
         let mounted = true;
         if (isUpdated) {
-            getWatchedMovies(USER_ID)
+            getWantToSeeMovies(USER_ID)
                 .then(res => {
                     setIsLoading(false);
                     res.data.forEach(movie => {
-                        if (movie.userData.watched)
-                            watchedContext.addWatched(movie.movie);
+                        if (movie.userData.wantToSee)
+                            watchedContext.addWantToSee(movie.movie);
                     });
                     setLoadedMovies(res.data);
                 })
@@ -37,10 +37,10 @@ function WatchedMovies() {
 
     return (
         <section>
-            <h1>My watched movies</h1>
+            <h1>My want to watch movies</h1>
             <MovieList movies={loadedMovies} />
         </section>
     );
 }
 
-export default WatchedMovies;
+export default WantToWatchMovies;
