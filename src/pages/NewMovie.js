@@ -1,10 +1,10 @@
-import NewMovieForm from "../components/movies/NewMovieForm";
+import MovieForm from "../components/movies/MovieForm";
 import {postMovie} from "../services/MovieService";
 import {useEffect, useState} from "react";
 import SuccessMessage from "../components/ui/SuccessMessage";
 import ErrorMessage from "../components/ui/ErrorMessage";
 
-function NewMeetupsPage() {
+function NewMovie() {
     const [postStatus, setPostStatus] = useState(null);
 
     function addMovieHandler(movieData) {
@@ -32,9 +32,9 @@ function NewMeetupsPage() {
                 <ErrorMessage text='An error occurred'/>) :
                 null
             }
-            <NewMovieForm onAddMovieData={addMovieHandler}/>
+            <MovieForm onSubmitMovie={addMovieHandler}/>
         </section>
     );
 }
 
-export default NewMeetupsPage;
+export default NewMovie;

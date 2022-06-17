@@ -2,7 +2,8 @@ import {Route, Routes} from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import WatchedMovies from "./pages/WatchedMovies";
 import AllMovies from "./pages/AllMovies";
-import NewMovies from "./pages/NewMovies";
+import NewMovies from "./pages/NewMovie";
+import EditMovie from "./pages/EditMovie";
 import WantToWatchMovies from "./pages/WantToWatchMovies";
 
 //Prod
@@ -19,7 +20,8 @@ function App() {
                 <Route path='/movies/' element={<AllMovies/>}/>
                 <Route path='/movies/watched' element={<WatchedMovies/>}/>
                 <Route path='/movies/wantToWatch' element={<WantToWatchMovies/>}/>
-                <Route path='/movies/new' element={<NewMovies/>}/>
+                <Route path='/movies/new' element={<NewMovies />} />
+                <Route path='/movies/edit/:movieId' element={<EditMovie/>}/>
             </Routes>
         </Layout>
     );
