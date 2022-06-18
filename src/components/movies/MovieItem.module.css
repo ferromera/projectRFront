@@ -1,13 +1,14 @@
 .item {
     margin: 1rem 0;
+    width: 800px;
 }
 .container {
-    height: 350px;
+    height: 440px;
 }
 .image {
     float: left;
-    width: 40%;
-    height: 350px;
+    width: 300px;
+    height: 440px;
     overflow: hidden;
     border-bottom-left-radius: 6px;
     border-top-left-radius: 6px;
@@ -21,8 +22,8 @@
 
 .content {
     text-align: center;
-    padding: 1.5rem;
-    height: 250px;
+    padding: 60px 1.5rem 1.5rem 1.5rem;
+    height: 350px;
 }
 
 .content h3 {

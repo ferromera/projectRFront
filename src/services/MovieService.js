@@ -26,3 +26,6 @@ export function postMovie(json) {
     });
 }
 
+export function deleteMovie(id) {
+    return axios.delete(`${BACKEND_HOST}/movies/${id}`);
+}

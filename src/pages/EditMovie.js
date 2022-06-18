@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import SuccessMessage from "../components/ui/SuccessMessage";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import { useParams } from "react-router-dom";
+import PageTitle from "../components/layout/PageTitle";
 
 function EditMovie(params) {
     const [postStatus, setPostStatus] = useState(null);
     const { movieId } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [movie, setMovie] = useState(null);
-    console.log(movieId);
 
     function addMovieHandler(movieData) {
         postMovie(movieData)
@@ -33,12 +33,13 @@ function EditMovie(params) {
     useEffect(() => {
         setIsLoading(true);
         let mounted = true;
-        getMovie(movieId)
-            .then(res => {
-                setIsLoading(false);
-                setMovie(res.data);
-            })
-        return () => { mounted = false; }
+        getMovie(movieId).then((res) => {
+            setIsLoading(false);
+            setMovie(res.data);
+        });
+        return () => {
+            mounted = false;
+        };
     }, []);
 
     if (isLoading) {
@@ -49,10 +50,9 @@ function EditMovie(params) {
         );
     }
 
-   
     return (
         <section>
-            <h1>Edit movie {movieId}</h1>
+            <PageTitle text="Edit movie"></PageTitle>
             {postStatus !== null ? (
                 postStatus ? (
                     <SuccessMessage text="Movie edited!" />

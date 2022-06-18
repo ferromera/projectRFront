@@ -1,34 +1,39 @@
 import MovieList from "../components/movies/MovieList";
-import {useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 
-import {getMovies} from "../services/MovieService";
-import {USER_ID} from "../App";
+import { getMovies } from "../services/MovieService";
+import { USER_ID } from "../App";
 import WatchedContext from "../store/WatchedContext";
-
+import { Typography } from "@mui/material";
+import PageTitle from "../components/layout/PageTitle";
 
 function AllMoviesPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedMovies, setLoadedMovies] = useState([]);
     const watchedContext = useContext(WatchedContext);
+    const isDeleting = watchedContext.deleting;
 
     useEffect(() => {
         setIsLoading(true);
         let mounted = true;
-        getMovies(USER_ID)
-            .then(res => {
+        if (!isDeleting) {
+            getMovies(USER_ID).then((res) => {
                 setIsLoading(false);
-                res.data.forEach(movie => {
+                res.data.forEach((movie) => {
                     if (movie.userData) {
                         if (movie.userData.watched)
-                            watchedContext.addWatched(movie.movie)
+                            watchedContext.addWatched(movie.movie);
                         if (movie.userData.wantToWatch)
-                            watchedContext.addWantToWatch(movie.movie)
+                            watchedContext.addWantToWatch(movie.movie);
                     }
-                })
+                });
                 setLoadedMovies(res.data);
-            })
-        return () => { mounted = false; }
-    }, []);
+            });
+        }
+        return () => {
+            mounted = false;
+        };
+    }, [isDeleting]);
 
     if (isLoading) {
         return (
@@ -40,7 +45,7 @@ function AllMoviesPage() {
 
     return (
         <section>
-            <h1>All Movies</h1>
+            <PageTitle text="All movies"></PageTitle>
             <MovieList movies={loadedMovies} />
         </section>
     );

@@ -55,7 +55,7 @@ function MovieItemButtons(props) {
         margin: "10px"
     };
     return (
-        <div>
+        <div style={{"marginLeft":"360px"}}>
             {itemIsWatched ?
                 <Button sx={buttonStyle} variant="contained"
                         onClick={watchedHandler}>Watched</Button>

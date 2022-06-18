@@ -4,9 +4,9 @@ import Card from "../ui/Card";
 import classes from "./NewMovieForm.module.css";
 
 function MovieForm(props) {
-    const [title, setTitle] = useState(props.movie.title);
-    const [image, setImage] = useState(props.movie.image);
-    const [description, setDescription] = useState(props.movie.description);
+    const [title, setTitle] = useState(props.movie.title ? props.movie.title : "");
+    const [year, setYear] = useState(props.movie.year ? props.movie.year : "");
+    const [description, setDescription] = useState(props.movie.description  ? props.movie.description : "");
 
     const [selectedFile, setSelectedFile] = useState();
 
@@ -20,6 +20,9 @@ function MovieForm(props) {
     function changeDescription(e) {
         setDescription(e.target.value);
     }
+    function changeYear(e) {
+        setYear(e.target.value);
+    }
 
     function submitHandler(event) {
         event.preventDefault();
@@ -30,11 +33,10 @@ function MovieForm(props) {
         const movieData = {
             id: props.movie.id,
             title: enteredTitle,
+            year: year,
             file: selectedFile,
             description: enteredDescription,
         };
-
-        console.log(JSON.stringify(movieData));
         props.onSubmitMovie(movieData);
     }
 
@@ -51,7 +53,17 @@ function MovieForm(props) {
                         onChange={changeTitle}
                     />
                 </div>
-                <div>
+                <div className={classes.control}>
+                    <label htmlFor="year">Year</label>
+                    <input
+                        type="text"
+                        required
+                        id="year"
+                        value={year}
+                        onChange={changeYear}
+                    />
+                </div>
+                <div className={classes.control}>
                     <label htmlFor="image">Image</label>
                     <input
                         type="file"

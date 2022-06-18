@@ -4,19 +4,22 @@ const WatchedContext = createContext({
     watched: [],
     wantToWatch: [],
     updated: true,
+    deleting: false,
     addWatched: () => {},
     removeWatched: () => {},
     itemIsWatched: () => {} ,
     addWantToWatch: () => {},
     removeWantToWatch: () => {},
     itemIsWantToWatch: () => {},
-    setUpdated: () => {}
+    setUpdated: () => { },
+    setDeleting: () => {}
 });
 
 export function WatchedContextProvider(props) {
     const [userWatched, setUserWatched] = useState([]);
     const [userWantToWatch, setUserWantToWatch] = useState([]);
     const [isUpdated, setIsUpdated] = useState([]);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     function addWatchedHandler(movie) {
         setUserWatched((prevWatched) => {
@@ -54,13 +57,15 @@ export function WatchedContextProvider(props) {
         watched: userWatched,
         wantToWatch: userWatched,
         updated: isUpdated,
+        deleting: isDeleting,
         addWatched: addWatchedHandler,
         removeWatched: removeWatchedHandler,
         itemIsWatched: itemIsWatchedHandler,
         addWantToWatch: addWantToWatchHandler,
         removeWantToWatch: removeWantToWatchHandler,
         itemIsWantToWatch: itemIsWantToWatchHandler,
-        setUpdated: setIsUpdated
+        setUpdated: setIsUpdated,
+        setDeleting: setIsDeleting
     };
 
     return (
