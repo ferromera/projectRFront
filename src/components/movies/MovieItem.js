@@ -62,7 +62,7 @@ function MovieItem(props) {
                         <MovieYear year={props.movie.year}></MovieYear>
                         <MovieDescription text={props.movie.description}></MovieDescription>
                     </div>
-                    <MovieItemButtons movie={props.movie} />
+                    <MovieItemButtons movie={props.movie} userData={props.userData} />
                 </div>
             </Card>
         </li>
