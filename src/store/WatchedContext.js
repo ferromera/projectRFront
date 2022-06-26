@@ -15,6 +15,7 @@ const WatchedContext = createContext({
     setDeleting: () => {}
 });
 
+
 export function WatchedContextProvider(props) {
     const [userWatched, setUserWatched] = useState([]);
     const [userWantToWatch, setUserWantToWatch] = useState([]);

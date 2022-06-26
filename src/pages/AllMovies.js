@@ -2,9 +2,7 @@ import MovieList from "../components/movies/MovieList";
 import { useEffect, useState, useContext } from "react";
 
 import { getMovies } from "../services/MovieService";
-import { USER_ID } from "../App";
 import WatchedContext from "../store/WatchedContext";
-import { Typography } from "@mui/material";
 import PageTitle from "../components/layout/PageTitle";
 
 function AllMoviesPage() {
@@ -17,7 +15,7 @@ function AllMoviesPage() {
         setIsLoading(true);
         let mounted = true;
         if (!isDeleting) {
-            getMovies(USER_ID).then((res) => {
+            getMovies().then((res) => {
                 setIsLoading(false);
                 res.data.forEach((movie) => {
                     if (movie.userData) {

@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { getWatchedMovies } from "../services/MovieService";
-import { USER_ID } from "../App";
 import MovieList from "../components/movies/MovieList";
 import WatchedContext from "../store/WatchedContext";
 import PageTitle from "../components/layout/PageTitle";
@@ -15,7 +14,7 @@ function WatchedMovies() {
         setIsLoading(true);
         let mounted = true;
         if (isUpdated) {
-            getWatchedMovies(USER_ID).then((res) => {
+            getWatchedMovies().then((res) => {
                 setIsLoading(false);
                 res.data.forEach((movie) => {
                     if (movie.userData.watched)

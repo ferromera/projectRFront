@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import { getWantToWatchMovies } from "../services/MovieService";
-import { USER_ID } from "../App";
 import MovieList from "../components/movies/MovieList";
 import WatchedContext from "../store/WatchedContext";
 import PageTitle from "../components/layout/PageTitle";
+import { Typography } from "@mui/material";
 
 function WantToWatchMovies() {
     const watchedContext = useContext(WatchedContext);
@@ -15,7 +15,7 @@ function WantToWatchMovies() {
         setIsLoading(true);
         let mounted = true;
         if (isUpdated) {
-            getWantToWatchMovies(USER_ID).then((res) => {
+            getWantToWatchMovies().then((res) => {
                 setIsLoading(false);
                 res.data.forEach((movie) => {
                     if (movie.userData.wantToWatch)

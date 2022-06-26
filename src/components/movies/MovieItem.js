@@ -10,10 +10,12 @@ import { useContext } from "react";
 import MovieTitle from "./MovieTitle";
 import MovieYear from "./MovieYear";
 import MovieDescription from "./MovieDescription";
+import UserContext from "../../store/UserContext";
 
 function MovieItem(props) {
     const navigate = useNavigate();
     const watchedContext = useContext(WatchedContext);
+    const userContext = useContext(UserContext);
 
     function editHandler() {
         navigate("/movies/edit/" + props.movie.id);
@@ -29,7 +31,9 @@ function MovieItem(props) {
     return (
         <li className={classes.item}>
             <Card>
-                <Button
+                {userContext.user?.roles.includes("ROLE_ADMIN") && (
+                    <div>
+                    <Button
                     sx={{ float: "right", margin: "5px" }}
                     size="small"
                     variant="outlined"
@@ -46,6 +50,9 @@ function MovieItem(props) {
                 >
                     Edit
                 </Button>
+                    </div>
+                )}
+                
                 <div className={classes.container}>
                     <div className={classes.image}>
                         <img

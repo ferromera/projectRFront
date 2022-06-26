@@ -5,19 +5,19 @@ import AllMovies from "./pages/AllMovies";
 import NewMovies from "./pages/NewMovie";
 import EditMovie from "./pages/EditMovie";
 import WantToWatchMovies from "./pages/WantToWatchMovies";
+import Home from "./pages/Home";
 
 
 //Prod
-export const BACKEND_HOST = 'https://projectr-backend.herokuapp.com'
-export const USER_ID = 4;
+//export const BACKEND_HOST = 'https://projectr-backend.herokuapp.com'
 //Dev
-//export const BACKEND_HOST = 'http://localhost:8080'
-//export const USER_ID = 3;
+export const BACKEND_HOST = 'http://localhost:8080'
 
 function App() {
     return (
         <Layout>
             <Routes>
+                <Route path='/' element={<Home/>}/>
                 <Route path='/movies/' element={<AllMovies/>}/>
                 <Route path='/movies/watched' element={<WatchedMovies/>}/>
                 <Route path='/movies/wantToWatch' element={<WantToWatchMovies/>}/>

@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import { useContext, useState } from "react";
 import WatchedContext from "../../store/WatchedContext";
-import { USER_ID } from "../../App";
 import { postUserMovie } from "../../services/UserMovieService";
 import StarIcon from '@mui/icons-material/Star';
+import { getCurrentUser } from "../../services/AuthService";
 
 function MovieItemButtons(props) {
     const watchedContext = useContext(WatchedContext);
@@ -34,7 +34,7 @@ function MovieItemButtons(props) {
     function updateWatchedCall() {
         watchedContext.setUpdated(false);
         const json = {
-            userId: USER_ID,
+            userId: getCurrentUser().id,
             movieId: props.movie.id,
             watched: !itemIsWatched,
             wantToWatch: false,
@@ -46,7 +46,7 @@ function MovieItemButtons(props) {
     function updateRatingCall() {
         watchedContext.setUpdated(false);
         const json = {
-            userId: USER_ID,
+            userId: getCurrentUser().id,
             movieId: props.movie.id,
             watched: tempRating ? true: itemIsWatched,
             wantToWatch: tempRating ? false : itemIsWantToWatch,
@@ -73,7 +73,7 @@ function MovieItemButtons(props) {
     function updateWantToWatchCall() {
         watchedContext.setUpdated(false);
         const json = {
-            userId: USER_ID,
+            userId: getCurrentUser().id,
             movieId: props.movie.id,
             watched: false,
             wantToWatch: !itemIsWantToWatch,
