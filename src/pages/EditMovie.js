@@ -60,7 +60,7 @@ function EditMovie(params) {
                     <ErrorMessage text="An error occurred" />
                 )
             ) : null}
-            <MovieForm onSubmitMovie={addMovieHandler} movie={movie} />
+            <MovieForm onSubmitMovie={addMovieHandler} movie={movie.movie} />
         </section>
     );
 }

@@ -29,50 +29,49 @@ function MovieItem(props) {
     }
 
     return (
-        <li className={classes.item}>
-            <Card>
-                {userContext.user?.roles.includes("ROLE_ADMIN") && (
-                    <div>
+        <Card>
+            {userContext.user?.roles.includes("ROLE_ADMIN") && (
+                <div>
                     <Button
-                    sx={{ float: "right", margin: "5px" }}
-                    size="small"
-                    variant="outlined"
-                    color="error"
-                    onClick={deleteHandler}
-                >
-                    Delete
-                </Button>
-                <Button
-                    sx={{ float: "right", margin: "5px" }}
-                    size="small"
-                    variant="outlined"
-                    onClick={editHandler}
-                >
-                    Edit
-                </Button>
-                    </div>
-                )}
-                
-                <div className={classes.container}>
-                    <div className={classes.image}>
-                        <img
-                            src={
-                                BACKEND_HOST +
-                                "/movies/images/" +
-                                props.movie.id
-                            }
-                            alt={props.movie.title}
-                        />
-                    </div>
-                    <div className={classes.content}>
-                        <MovieTitle text={props.movie.title}></MovieTitle>
-                        <MovieYear year={props.movie.year}></MovieYear>
-                        <MovieDescription text={props.movie.description}></MovieDescription>
-                    </div>
-                    <MovieItemButtons movie={props.movie} userData={props.userData} />
+                        sx={{ float: "right", margin: "5px" }}
+                        size="small"
+                        variant="outlined"
+                        color="error"
+                        onClick={deleteHandler}
+                    >
+                        Delete
+                    </Button>
+                    <Button
+                        sx={{ float: "right", margin: "5px" }}
+                        size="small"
+                        variant="outlined"
+                        onClick={editHandler}
+                    >
+                        Edit
+                    </Button>
                 </div>
-            </Card>
-        </li>
+            )}
+
+            <div className={classes.container}>
+                <div className={classes.image}>
+                    <img
+                        src={BACKEND_HOST + "/movies/images/" + props.movie.id}
+                        alt={props.movie.title}
+                    />
+                </div>
+                <div className={classes.content}>
+                    <MovieTitle text={props.movie.title}></MovieTitle>
+                    <MovieYear year={props.movie.year}></MovieYear>
+                    <MovieDescription
+                        text={props.movie.description}
+                    ></MovieDescription>
+                </div>
+                <MovieItemButtons
+                    movie={props.movie}
+                    userData={props.userData}
+                />
+            </div>
+        </Card>
     );
 }
 

@@ -6,6 +6,9 @@ import NewMovies from "./pages/NewMovie";
 import EditMovie from "./pages/EditMovie";
 import WantToWatchMovies from "./pages/WantToWatchMovies";
 import Home from "./pages/Home";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import MoviePage from "./pages/Movie";
 
 
 //Prod
@@ -18,7 +21,10 @@ function App() {
         <Layout>
             <Routes>
                 <Route path='/' element={<Home/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/signup' element={<SignUp/>}/>
                 <Route path='/movies/' element={<AllMovies/>}/>
+                <Route path='/movies/:id' element={<MoviePage/>}/>
                 <Route path='/movies/watched' element={<WatchedMovies/>}/>
                 <Route path='/movies/wantToWatch' element={<WantToWatchMovies/>}/>
                 <Route path='/movies/new' element={<NewMovies />} />

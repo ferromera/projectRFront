@@ -2,10 +2,10 @@
 import React from "react";
 import { FormInputTextBase } from "./FormInputTextBase";
 
-export const FormInputTextArea = (props) => {
+export const FormInputTextPassword = (props) => {
     const { ...allProps } = {
         ...props,
-        fields: { multiline: true}
+        fields: { type: "password"}
       };
     return (
         <FormInputTextBase {...allProps} />      

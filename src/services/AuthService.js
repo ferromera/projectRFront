@@ -1,7 +1,5 @@
 import axios from "axios";
-import { useContext } from "react";
 import { BACKEND_HOST } from "../App";
-import UserContext from "../store/UserContext";
 
 export async function login(json) {
     const response = await axios.post(`${BACKEND_HOST}/auth/signin`, json);
@@ -11,6 +9,9 @@ export async function login(json) {
     return response.data;
 }
 
+export function signup(json) {
+    return axios.post(`${BACKEND_HOST}/auth/signup`, json);
+}
 export function getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
 }

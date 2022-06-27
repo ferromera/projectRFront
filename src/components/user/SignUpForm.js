@@ -3,13 +3,13 @@ import { useContext, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../services/AuthService";
+import { signup } from "../../services/AuthService";
 import UserContext from "../../store/UserContext";
 
 import { FormInputText } from "../form/FormInputText";
 import { FormInputTextPassword } from "../form/FormInputTextPassword";
 
-function LoginForm(props) {
+function SignUpForm(props) {
     const defaultValues = {
         username: "",
         password: "",
@@ -19,18 +19,17 @@ function LoginForm(props) {
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const userContext = useContext(UserContext);
-    const onLogin = (data, event) => {
+
+    const onSignUp = (data, event) => {
         event.preventDefault();
-        login(data).then(
+        signup(data).then(
             (data) => {
                 userContext.setUser(data);
-                navigate("/movies");
+                navigate("/");
             },
             (error) => {
-                const msg = error.response.status == 401 ? "Invalid username / password" : "An error ocurred."
-                setError('username', { type: 'custom', message: '' })
-                setError('password', { type: 'custom', message: '' })
-                setErrorMessage(msg);
+                const msg = error.response.data?.status;
+                setErrorMessage(msg ? msg : "An error ocurred");
             }
         );
     };
@@ -52,6 +51,17 @@ function LoginForm(props) {
                 label="Username"
                 rules={{
                     required: { value: true, message: "Username is required" },
+                    minLength: { value: 3, message: "Username must have at least 3 characters." },
+                    maxLength: { value: 20, message: "Username must have at most 20 characters." },
+                }}
+            />
+            <FormInputText
+                name="email"
+                control={control}
+                label="Email"
+                rules={{
+                    required: { value: true, message: "Username is required" },
+                    pattern: { value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, message: "Invalid email." },
                 }}
             />
             <FormInputTextPassword
@@ -60,17 +70,19 @@ function LoginForm(props) {
                 label="Password"
                 rules={{
                     required: { value: true, message: "Password is required" },
+                    minLength: { value: 6, message: "Password must have at least 6 characters." },
+                    maxLength: { value: 20, message: "Password must have at most 20 characters." },
                 }}
             />
             <Button
                 sx={{ width: "fit-content", marginLeft: "auto" }}
-                onClick={handleSubmit(onLogin)}
+                onClick={handleSubmit(onSignUp)}
                 variant={"contained"}
             >
-                Log in
+                Sign up
             </Button>
         </Paper>
     );
 }
 
-export default LoginForm;
+export default SignUpForm;
