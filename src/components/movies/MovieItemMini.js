@@ -1,15 +1,10 @@
 import classes from "./MovieItemMini.module.css";
-import Card from "../ui/Card";
 import { BACKEND_HOST } from "../../App";
-import MovieItemButtons from "./MovieItemButtons";
-import { Button, Divider, Paper, Typography } from "@mui/material";
+import { Button, Chip, Divider, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { deleteMovie } from "../../services/MovieService";
 import WatchedContext from "../../store/WatchedContext";
 import { useContext } from "react";
-import MovieTitle from "./MovieTitle";
-import MovieYear from "./MovieYear";
-import MovieDescription from "./MovieDescription";
 import UserContext from "../../store/UserContext";
 
 function MovieItemMini(props) {
@@ -17,7 +12,8 @@ function MovieItemMini(props) {
     const watchedContext = useContext(WatchedContext);
     const userContext = useContext(UserContext);
 
-    function editHandler() {
+    function editHandler(event) {
+        event.stopPropagation();
         navigate("/movies/edit/" + props.movie.id);
     }
 
@@ -29,12 +25,12 @@ function MovieItemMini(props) {
     }
 
     function openItemHandler() {
-        navigate("/movies/" + props.movie.id)
+        navigate("/movies/" + props.movie.id);
     }
 
     return (
-        <li className={classes.item}>
-            <Paper sx={{ marginBottom: "4px" }} onClick={openItemHandler}>
+        <li className={classes.item} onClick={openItemHandler}>
+            <Paper sx={{ marginBottom: "4px" }} >
                 <div className={classes.container}>
                     <div className={classes.image}>
                         <img
@@ -47,27 +43,74 @@ function MovieItemMini(props) {
                         />
                     </div>
                     <div className={classes.contentContainer}>
-                        <div className={classes.content}>
+                        <div className={classes.content} >
                             <Typography
                                 variant="p"
                                 component="div"
-                                sx={{ whiteSpace: "nowrap",
+                                sx={{
+                                    whiteSpace: "nowrap",
                                     textOverflow: "ellipsis",
-                                    overflow: "hidden", marginTop: "10px" }}
+                                    overflow: "hidden",
+                                    margin: "5px 0",
+                                    fontSize: "19px",
+                                }}
                             >
                                 {props.movie.title}
                             </Typography>
-                            <Typography variant="p" component="div" sx={{}}>
-                                {props.movie.year
-                                    ? "(" + props.movie.year + ")"
-                                    : null}
+                            <div className={classes.genresLines}>
+                                <Typography
+                                    variant="p"
+                                    component="div"
+                                    sx={{
+                                        fontSize: "15px",
+                                        display: "inline",
+                                        marginRight: "10px",
+                                    }}
+                                >
+                                    {props.movie.year ? props.movie.year : null}
+                                </Typography>
+                                {props.movie.genres.map(function (value) {
+                                    return (
+                                        <Chip
+                                            sx={{
+                                                fontSize: "12px",
+                                                height: "20px",
+                                                marginRight: "10px",
+                                                backgroundColor: "#efefef"
+                                            }}
+                                            key={value.name}
+                                            variant="outlined"
+                                            size="small"
+                                            label={value.name}
+                                        />
+                                    );
+                                })}
+                            </div>
+                            <Typography
+                                variant="p"
+                                component="div"
+                                sx={{
+                                    whiteSpace: "nowrap",
+                                    textOverflow: "ellipsis",
+                                    overflow: "hidden",
+                                    fontSize: "14px",
+                                    marginTop: "6px",
+                                }}
+                            >
+                                Título original: {props.movie.originalTitle}
                             </Typography>
                         </div>
                         <div className={classes.buttons}>
                             {userContext.user?.roles.includes("ROLE_ADMIN") && (
                                 <div>
                                     <Button
-                                        sx={{ minWidth:"0px", width:"50px",fontSize:"0.5rem",padding:"2px 10px", margin: "5px 0" }}
+                                        sx={{
+                                            minWidth: "0px",
+                                            width: "50px",
+                                            fontSize: "0.5rem",
+                                            padding: "2px 10px",
+                                            margin: "5px 0",
+                                        }}
                                         size="small"
                                         variant="outlined"
                                         onClick={editHandler}
@@ -75,7 +118,13 @@ function MovieItemMini(props) {
                                         Edit
                                     </Button>
                                     <Button
-                                        sx={{minWidth:"0px", width:"50px",fontSize:"0.5rem",padding:"2px 10px", margin: "5px 0" }}
+                                        sx={{
+                                            minWidth: "0px",
+                                            width: "50px",
+                                            fontSize: "0.5rem",
+                                            padding: "2px 10px",
+                                            margin: "5px 0",
+                                        }}
                                         size="small"
                                         variant="outlined"
                                         color="error"

@@ -54,15 +54,16 @@ function MainNavigation() {
                         aria-label="menu"
                         sx={{ mr: 2 }}
                     ></IconButton>
-
+                    
                     <Typography
                         variant="h5"
                         component="div"
-                        sx={{ flexGrow: 1 }}
+                        sx={{  cursor:"pointer"}}
                         onClick={goHome}
                     >
                         Mediabry
                     </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
 
                     {userContext.user?.roles?.includes("ROLE_USER") && (
                         <Button

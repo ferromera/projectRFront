@@ -11,6 +11,7 @@ import MovieTitle from "./MovieTitle";
 import MovieYear from "./MovieYear";
 import MovieDescription from "./MovieDescription";
 import UserContext from "../../store/UserContext";
+import MovieOriginalTitle from "./MovieOriginalTitle";
 
 function MovieItem(props) {
     const navigate = useNavigate();
@@ -62,6 +63,7 @@ function MovieItem(props) {
                 <div className={classes.content}>
                     <MovieTitle text={props.movie.title}></MovieTitle>
                     <MovieYear year={props.movie.year}></MovieYear>
+                    <MovieOriginalTitle text={props.movie.originalTitle}></MovieOriginalTitle>
                     <MovieDescription
                         text={props.movie.description}
                     ></MovieDescription>

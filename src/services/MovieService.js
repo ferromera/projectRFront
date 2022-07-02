@@ -19,8 +19,8 @@ export function getWantToWatchMovies() {
     return axios.get(`${BACKEND_HOST}/movies/wantToWatch`, {headers: authHeader()});
 }
 
-export function postMovie(json) {
-    return axios.post(`${BACKEND_HOST}/movies`, json, {
+export function postMovie(data) {
+    return axios.post(`${BACKEND_HOST}/movies`, data, {
         headers: {
             "Content-Type": "multipart/form-data",
             ...authHeader()
