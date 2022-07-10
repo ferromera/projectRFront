@@ -12,6 +12,7 @@ import WatchedContext from "../../store/WatchedContext";
 import { postUserMovie } from "../../services/UserMovieService";
 import StarIcon from '@mui/icons-material/Star';
 import { getCurrentUser } from "../../services/AuthService";
+import LoadingContext from "../../store/LoadingContext";
 
 function MovieItemButtons(props) {
     const watchedContext = useContext(WatchedContext);
@@ -32,7 +33,6 @@ function MovieItemButtons(props) {
     };
     
     function updateWatchedCall() {
-        watchedContext.setUpdated(false);
         const json = {
             userId: getCurrentUser().id,
             movieId: props.movie.id,
@@ -40,11 +40,10 @@ function MovieItemButtons(props) {
             wantToWatch: false,
             rating: 0
         };
-        postUserMovie(json).then((res) => watchedContext.setUpdated(true));
+        postUserMovie(json).then((res) => {});
     }
 
     function updateRatingCall() {
-        watchedContext.setUpdated(false);
         const json = {
             userId: getCurrentUser().id,
             movieId: props.movie.id,
@@ -54,7 +53,6 @@ function MovieItemButtons(props) {
         };
         postUserMovie(json).then((res) => {
             setModalIsOpen(false);
-            watchedContext.setUpdated(true);
         });
     }
 
@@ -71,7 +69,6 @@ function MovieItemButtons(props) {
     }
 
     function updateWantToWatchCall() {
-        watchedContext.setUpdated(false);
         const json = {
             userId: getCurrentUser().id,
             movieId: props.movie.id,
@@ -79,7 +76,7 @@ function MovieItemButtons(props) {
             wantToWatch: !itemIsWantToWatch,
             rating: 0
         };
-        postUserMovie(json).then((res) => watchedContext.setUpdated(true));
+        postUserMovie(json).then((res) => {});
     }
 
     function wantToWatchHandler() {

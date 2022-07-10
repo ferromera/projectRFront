@@ -29,7 +29,6 @@ function MovieForm(props) {
     
     const onSubmit = (data, event) => {
         event.preventDefault();
-        console.log(data)
         const movieData = {
             id: props.movie.id,
             title: data.title,

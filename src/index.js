@@ -5,14 +5,17 @@ import App from "./App";
 import { HashRouter } from "react-router-dom";
 import { WatchedContextProvider } from "./store/WatchedContext";
 import { UserContextProvider } from "./store/UserContext";
+import { LoadingContextProvider } from "./store/LoadingContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <UserContextProvider>
-        <WatchedContextProvider>
-            <HashRouter>
-                <App />
-            </HashRouter>
-        </WatchedContextProvider>
-    </UserContextProvider>
+    <LoadingContextProvider>
+        <UserContextProvider>
+            <WatchedContextProvider>
+                <HashRouter>
+                    <App />
+                </HashRouter>
+            </WatchedContextProvider>
+        </UserContextProvider>
+    </LoadingContextProvider>
 );

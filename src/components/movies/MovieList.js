@@ -16,7 +16,6 @@ function MovieList(props) {
                 <MovieItemMini
                     key={movie.movie.id}
                     movie={movie.movie}
-                    userData={movie.userData}
                 />
             ))}
         </ul>

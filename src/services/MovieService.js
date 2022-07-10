@@ -3,16 +3,16 @@ import { BACKEND_HOST } from "../App";
 import { authHeader } from "./AuthService";
 
 
-export function getMovies() {
-    return axios.get(`${BACKEND_HOST}/movies`, {headers: authHeader()});
+export function getMovies(page, pageSize) {
+    return axios.get(`${BACKEND_HOST}/movies?page=${page}&pageSize=${pageSize}`, {headers: authHeader()});
 }
 
 export function getMovie(movieId) {
     return axios.get(`${BACKEND_HOST}/movies/${movieId}`, {headers: authHeader()});
 }
 
-export function getWatchedMovies() {
-    return axios.get(`${BACKEND_HOST}/movies/watched`, {headers: authHeader()});
+export function getWatchedMovies(page, pageSize) {
+    return axios.get(`${BACKEND_HOST}/movies/watched?page=${page}&pageSize=${pageSize}`, {headers: authHeader()});
 }
 
 export function getWantToWatchMovies() {

@@ -14,7 +14,7 @@ import MoviePage from "./pages/Movie";
 //Prod
 //export const BACKEND_HOST = 'https://projectr-backend.herokuapp.com'
 //Dev
-export const BACKEND_HOST = 'http://localhost:8080'
+export const BACKEND_HOST = 'http://localhost:30000'
 
 function App() {
     return (
