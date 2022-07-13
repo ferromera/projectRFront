@@ -3,8 +3,8 @@ import { BACKEND_HOST } from "../App";
 import { authHeader } from "./AuthService";
 
 
-export function getMovies(page, pageSize) {
-    return axios.get(`${BACKEND_HOST}/movies?page=${page}&pageSize=${pageSize}`, {headers: authHeader()});
+export function getMovies(page, pageSize, searchQuery) {
+    return axios.get(`${BACKEND_HOST}/movies?page=${page}&pageSize=${pageSize}&search=${searchQuery}`, {headers: authHeader()});
 }
 
 export function getMovie(movieId) {

@@ -1,6 +1,7 @@
 import { Box, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { trackPromise } from "react-promise-tracker";
+import { useLocation } from "react-router-dom";
 
 const pageSize = 10;
 export default function PaginationBar({ getItems, onResponse, children }) {
@@ -8,6 +9,7 @@ export default function PaginationBar({ getItems, onResponse, children }) {
         count: 0,
         page: 1,
     });
+    const location = useLocation();
 
     useEffect(() => {
         trackPromise(
@@ -16,7 +18,7 @@ export default function PaginationBar({ getItems, onResponse, children }) {
                 onResponse(response);
             })
         );
-    }, [pagination.page]);
+    }, [pagination.page, location]);
 
     function handlePageChange(event, page) {
         setPagination({ ...pagination, page: page });
@@ -30,7 +32,7 @@ export default function PaginationBar({ getItems, onResponse, children }) {
                 justifyContent={"center"}
                 allignItems="center"
                 display={"flex"}
-                sx={{ margin: "20px 0px" }}
+                sx={{ marginBottom: "20px" }}
             >
                 <Pagination
                     color="primary"
@@ -44,7 +46,7 @@ export default function PaginationBar({ getItems, onResponse, children }) {
                 justifyContent={"center"}
                 allignItems="center"
                 display={"flex"}
-                sx={{ margin: "20px 0px" }}
+                sx={{ marginTop: "20px" }}
             >
                 <Pagination
                     color="primary"
