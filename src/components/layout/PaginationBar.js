@@ -1,27 +1,31 @@
 import { Box, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { trackPromise } from "react-promise-tracker";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const pageSize = 10;
 export default function PaginationBar({ getItems, onResponse, children }) {
+    
+    const [searchParams, setSearchParams] = useSearchParams();
     const [pagination, setPagination] = useState({
         count: 0,
         page: 1,
     });
-    const location = useLocation();
 
     useEffect(() => {
+        const page = searchParams.get("page") ? parseInt(searchParams.get("page")) : 1;
         trackPromise(
-            getItems(pagination.page, pageSize).then((response) => {
-                setPagination({ ...pagination, count: response.data.count });
+            getItems(page, pageSize).then((response) => {
+                setPagination({ page: page, count: response.data.count });
                 onResponse(response);
             })
         );
-    }, [pagination.page, location]);
+    }, [searchParams]);
 
     function handlePageChange(event, page) {
-        setPagination({ ...pagination, page: page });
+        searchParams.set("page", page);
+        setSearchParams(searchParams);
+        
     }
 
     if (pagination.count <= pageSize) return children;

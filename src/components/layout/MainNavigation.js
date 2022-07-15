@@ -16,9 +16,7 @@ import SearchBar from "./SearchBar";
 function MainNavigation() {
     const navigate = useNavigate();
     const userContext = useContext(UserContext);
-    function goToMovies() {
-        navigate("/movies");
-    }
+    
     function goToWatched() {
         navigate("/movies/watched");
     }
@@ -69,13 +67,6 @@ function MainNavigation() {
                     {userContext.user?.roles?.includes("ROLE_USER") && (
                         <div>
                             <SearchBar/>
-                            <Button
-                                sx={buttonStyle}
-                                color="inherit"
-                                onClick={goToMovies}
-                            >
-                                All
-                            </Button>
                             <Button
                                 sx={buttonStyle}
                                 color="inherit"
