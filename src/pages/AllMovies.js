@@ -1,23 +1,21 @@
 import MovieList from "../components/movies/MovieList";
 import { useState, useContext, useEffect } from "react";
-
 import { getMovies } from "../services/MovieService";
 import WatchedContext from "../store/WatchedContext";
-import PageTitle from "../components/layout/PageTitle";
 import PaginationBar from "../components/layout/PaginationBar";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Typography } from "@mui/material";
+import AdvancedSearch from "../components/search/AdvancedSearch";
 
 function AllMoviesPage() {
     const [loadedMovies, setLoadedMovies] = useState([]);
     const watchedContext = useContext(WatchedContext);
-    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [search, setSearch] = useState("");
-
+    
     useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        setSearch(params.get("search") ? params.get("search") : "");
-    }, [location]);
+        setSearch(searchParams.get("search") ? searchParams.get("search") : "");
+    }, [searchParams]);
 
     function onResponse(response) {
         response.data.movies.forEach((movie) => {
@@ -32,25 +30,39 @@ function AllMoviesPage() {
     }
 
     function onPageChange(page, pageSize) {
-        const params = new URLSearchParams(location.search);
-        const searchParam = params.get("search") ? params.get("search") : "";
-        return getMovies(page, pageSize, searchParam);
+        const search = searchParams.get("search") ? searchParams.get("search") : "";
+        const anyOrAllGenres = searchParams.get("anyGenre") === "true" ? "true" : "false";
+        const genres = searchParams.get("genres") ? searchParams.get("genres") : "";
+        return getMovies(page, pageSize, search, anyOrAllGenres, genres);
+    }
+
+    function onSearch(data) {
+        searchParams.set("search", data.query);
+        searchParams.set("anyGenre", data.anyOrAllGenres == "any");
+        searchParams.set("genres", data.genres ? data.genres.join() : "");
+        searchParams.set("page", "1");
+        searchParams.set("r", 0)
+        setSearchParams(searchParams);
     }
 
     return (
         <section>
-            {search ? (
+            <AdvancedSearch onSearch={onSearch} />    
+            {search && (
                 <Typography
                     variant="h6"
                     component="div"
-                    sx={{ width: "500px", marginLeft: "auto" , marginRight: "auto", marginBottom: "20px" }}
+                    sx={{
+                        width: "500px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "20px",
+                    }}
                 >
                     Results for "{search}"
                 </Typography>
-            ) : (
-                <PageTitle text="All movies"></PageTitle>
-            )}
-
+            ) }
+            
             <PaginationBar getItems={onPageChange} onResponse={onResponse}>
                 <MovieList movies={loadedMovies} />
             </PaginationBar>

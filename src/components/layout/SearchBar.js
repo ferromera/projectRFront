@@ -13,7 +13,7 @@ function SearchBar(props) {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        navigate("/movies?search=" + searchQuery);
+        navigate("/movies?r=1&search=" + searchQuery);
     };
 
     function handleChange(event) {

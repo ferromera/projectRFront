@@ -1,0 +1,16 @@
+.advanced {
+    display: grid;
+    row-gap: 20px;
+    padding: 10px;
+}
+
+.genres > div:nth-child(1) {
+    width: 110px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.genres > div:nth-child(2) {
+    width: 318px;
+    display: inline-block;
+}
