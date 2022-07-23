@@ -14,3 +14,14 @@
     width: 318px;
     display: inline-block;
 }
+
+.years > div:nth-child(1) {
+    width: 214px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.years > div:nth-child(2) {
+    width: 214px;
+    display: inline-block;
+}

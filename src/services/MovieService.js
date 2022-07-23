@@ -3,7 +3,7 @@ import { BACKEND_HOST } from "../App";
 import { authHeader } from "./AuthService";
 
 
-export function getMovies(page, pageSize, search, anyOrAllGenre, genres) {
+export function getMovies(page, pageSize, search, anyOrAllGenre, genres, from, to) {
     let url = `${BACKEND_HOST}/movies`;
     let hasQueryParam = false;
     if (page) {
@@ -42,6 +42,22 @@ export function getMovies(page, pageSize, search, anyOrAllGenre, genres) {
         }
         hasQueryParam = true;
     }
+    if (from) {
+        if (hasQueryParam) {
+            url += `&fromYear=${from}`;
+        } else {
+            url += `?fromYear=${from}`;
+        }
+        hasQueryParam = true;
+    }
+    if (to) {
+        if (hasQueryParam) {
+            url += `&toYear=${to}`;
+        } else {
+            url += `?toYear=${to}`;
+        }
+        hasQueryParam = true;
+    }
     return axios.get(url, {headers: authHeader()});
 }
 
@@ -68,4 +84,8 @@ export function postMovie(data) {
 
 export function deleteMovie(id) {
     return axios.delete(`${BACKEND_HOST}/movies/${id}`, {headers: authHeader()});
+}
+
+export function getYearLimits() {
+    return axios.get(`${BACKEND_HOST}/movies/yearLimits`, {headers: authHeader()});
 }

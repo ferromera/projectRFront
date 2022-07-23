@@ -21,7 +21,7 @@ function SearchBar(props) {
     }
 
     return (
-        <div style={{display:"inline-block"}}>
+        <div>
             <form onSubmit={handleSubmit}>
                 <InputBase
                     placeholder="Search…"
@@ -43,7 +43,7 @@ function SearchBar(props) {
                 />
                 
 
-                <IconButton type="submit" aria-label="search">
+                <IconButton sx={{display:"none"}} type="submit" aria-label="search">
                     
                 </IconButton>
             </form>

@@ -14,6 +14,7 @@ import { MultipleSelect } from "../form/MultipleSelect";
 import FormSelect from "../form/Select";
 import classes from "./AdvancedSearch.module.css";
 import { useSearchParams } from "react-router-dom";
+import { getYearLimits } from "../../services/MovieService";
 
 function AdvancedSearch({onSearch}) {
     const [advancedExpanded, setAdvancedExpanded] = useState(false);
@@ -21,9 +22,12 @@ function AdvancedSearch({onSearch}) {
         query: "",
         anyOrAllGenres: "all",
         genres: [],
+        fromYear: "",
+        toYear:""
     };
     const [searchParams, setSearchParams] = useSearchParams();
     const [allGenres, setAllGenres] = useState([]);
+    const [years, setYears] = useState([]);
     const { handleSubmit, reset, control, setValue, watch } = useForm({
         defaultValues: defaultValues,
     });
@@ -31,6 +35,13 @@ function AdvancedSearch({onSearch}) {
     useEffect(() => {
         getGenres().then((res) => {
             setAllGenres(res.data);
+        });
+        getYearLimits().then((res) => {
+            let yearList = [{value: "", name: "None"}];
+            for (var y = res.data.min; y <= res.data.max; y++) {
+                yearList.push({value: y, name: new String(y)});
+            }
+            setYears(yearList);
         });
     }, []);
 
@@ -87,6 +98,20 @@ function AdvancedSearch({onSearch}) {
                             control={control}
                             label="Genres"
                             options={allGenres}
+                        />
+                    </div>
+                    <div className={classes.years}>
+                        <FormSelect
+                            name="fromYear"
+                            control={control}
+                            label="From"
+                            options={years}
+                        />
+                        <FormSelect
+                            name="toYear"
+                            control={control}
+                            label="To"
+                            options={years}
                         />
                     </div>
                     <Button

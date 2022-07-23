@@ -8,21 +8,17 @@ import {
 } from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../services/AuthService";
 import UserContext from "../../store/UserContext";
+import classes from "./MainNavigation.module.css";
 
 import SearchBar from "./SearchBar";
+import UserMenu from "./UserMenu";
 
 function MainNavigation() {
     const navigate = useNavigate();
     const userContext = useContext(UserContext);
     
-    function goToWatched() {
-        navigate("/movies/watched");
-    }
-    function goToWantToWatch() {
-        navigate("/movies/wantToWatch");
-    }
+    
     function goToNew() {
         navigate("/movies/new");
     }
@@ -35,17 +31,14 @@ function MainNavigation() {
     function goToSignUp() {
         navigate("/signup");
     }
-    function doLogout() {
-        logout();
-        userContext.setUser(null);
-        navigate("/");
-    }
+    
     const buttonStyle = { padding: "10px 20px" };
     
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
+        <Box >
+            <AppBar position="static" >
+                <Box >
+                <Toolbar sx={{display:"flex", width:"100%", margin:"0 auto", maxWidth:"1000px"}}>
                     <IconButton
                         size="large"
                         edge="start"
@@ -62,27 +55,14 @@ function MainNavigation() {
                     >
                         Mediabry
                     </Typography>
+                    
                     <Box sx={{ flexGrow: 1 }} />
-
                     {userContext.user?.roles?.includes("ROLE_USER") && (
-                        <div>
-                            <SearchBar/>
-                            <Button
-                                sx={buttonStyle}
-                                color="inherit"
-                                onClick={goToWatched}
-                            >
-                                Watched
-                            </Button>
-                            <Button
-                                sx={buttonStyle}
-                                color="inherit"
-                                onClick={goToWantToWatch}
-                            >
-                                Want to watch
-                            </Button>
+                        <div className={classes.searchbox}>
+                            <SearchBar />
                         </div>
                     )}
+                     <Box sx={{ flexGrow: 1 }} />
                     {userContext.user?.roles?.includes("ROLE_ADMIN") && (
                         <Button
                             sx={buttonStyle}
@@ -90,15 +70,6 @@ function MainNavigation() {
                             onClick={goToNew}
                         >
                             New
-                        </Button>
-                    )}
-                    {userContext.user && (
-                        <Button
-                            sx={buttonStyle}
-                            color="inherit"
-                            onClick={doLogout}
-                        >
-                            Logout
                         </Button>
                     )}
                     {!userContext.user && (
@@ -119,7 +90,12 @@ function MainNavigation() {
                             Sign up
                         </Button>
                     )}
+                    {userContext.user && (
+                        <UserMenu />
+                    )}
                 </Toolbar>
+            </Box>
+                
             </AppBar>
         </Box>
     );

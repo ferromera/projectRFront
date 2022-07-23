@@ -8,6 +8,7 @@ import UserContext from "../../store/UserContext";
 
 import { FormInputText } from "../form/FormInputText";
 import { FormInputTextPassword } from "../form/FormInputTextPassword";
+import { trackPromise } from "react-promise-tracker";
 
 function LoginForm(props) {
     const defaultValues = {
@@ -21,17 +22,19 @@ function LoginForm(props) {
     const userContext = useContext(UserContext);
     const onLogin = (data, event) => {
         event.preventDefault();
-        login(data).then(
-            (data) => {
-                userContext.setUser(data);
-                navigate("/movies");
-            },
-            (error) => {
-                const msg = error.response.status == 401 ? "Invalid username / password" : "An error ocurred."
-                setError('username', { type: 'custom', message: '' })
-                setError('password', { type: 'custom', message: '' })
-                setErrorMessage(msg);
-            }
+        trackPromise(
+            login(data).then(
+                (data) => {
+                    userContext.setUser(data);
+                    navigate("/movies");
+                },
+                (error) => {
+                    const msg = error.response.status == 401 ? "Invalid username / password" : "An error ocurred."
+                    setError('username', { type: 'custom', message: '' })
+                    setError('password', { type: 'custom', message: '' })
+                    setErrorMessage(msg);
+                }
+            )
         );
     };
 

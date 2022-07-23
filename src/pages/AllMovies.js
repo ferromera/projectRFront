@@ -33,15 +33,20 @@ function AllMoviesPage() {
         const search = searchParams.get("search") ? searchParams.get("search") : "";
         const anyOrAllGenres = searchParams.get("anyGenre") === "true" ? "true" : "false";
         const genres = searchParams.get("genres") ? searchParams.get("genres") : "";
-        return getMovies(page, pageSize, search, anyOrAllGenres, genres);
+        const from = searchParams.get("from") ? searchParams.get("from") : "";
+        const to = searchParams.get("to") ? searchParams.get("to") : "";
+        return getMovies(page, pageSize, search, anyOrAllGenres, genres, from, to);
     }
 
     function onSearch(data) {
         searchParams.set("search", data.query);
+        searchParams.set("from", data.fromYear);
+        searchParams.set("to", data.toYear);
         searchParams.set("anyGenre", data.anyOrAllGenres == "any");
         searchParams.set("genres", data.genres ? data.genres.join() : "");
         searchParams.set("page", "1");
-        searchParams.set("r", 0)
+        searchParams.set("r", 0);
+        searchParams.set("f", searchParams.get("f") === "1" ? 0 : 1);
         setSearchParams(searchParams);
     }
 

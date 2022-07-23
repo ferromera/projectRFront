@@ -8,10 +8,12 @@ import UserContext from "../../store/UserContext";
 
 import { FormInputText } from "../form/FormInputText";
 import { FormInputTextPassword } from "../form/FormInputTextPassword";
+import { trackPromise } from "react-promise-tracker";
 
 function SignUpForm(props) {
     const defaultValues = {
         username: "",
+        email: "",
         password: "",
     };
     const methods = useForm({ defaultValues: defaultValues });
@@ -22,15 +24,16 @@ function SignUpForm(props) {
 
     const onSignUp = (data, event) => {
         event.preventDefault();
-        signup(data).then(
-            (data) => {
-                userContext.setUser(data);
-                navigate("/");
-            },
-            (error) => {
-                const msg = error.response.data?.status;
-                setErrorMessage(msg ? msg : "An error ocurred");
-            }
+        trackPromise(
+            signup(data).then(
+                (data) => {
+                    navigate("/");
+                },
+                (error) => {
+                    const msg = error.response.data?.status;
+                    setErrorMessage(msg ? msg : "An error ocurred");
+                }
+            )
         );
     };
 
@@ -60,7 +63,7 @@ function SignUpForm(props) {
                 control={control}
                 label="Email"
                 rules={{
-                    required: { value: true, message: "Username is required" },
+                    required: { value: true, message: "Email is required" },
                     pattern: { value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, message: "Invalid email." },
                 }}
             />
