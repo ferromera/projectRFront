@@ -18,6 +18,12 @@ function MoviePage() {
         if (!isDeleting) {
             trackPromise(
                 getMovie(id).then((res) => {
+                    if (res.data.userData) {
+                        if (res.data.userData.watched)
+                            watchedContext.addWatched(res.data.movie);
+                        if (res.data.userData.wantToWatch)
+                            watchedContext.addWantToWatch(res.data.movie);
+                    }
                     setMovie(res.data);
                 })
             );

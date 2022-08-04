@@ -2,43 +2,56 @@ import {
     Box,
     Button,
     FormControl,
+    FormHelperText,
     InputLabel,
     MenuItem,
     Modal,
     Select,
+    TextField,
 } from "@mui/material";
 import { useContext, useState } from "react";
 import WatchedContext from "../../store/WatchedContext";
 import { postUserMovie } from "../../services/UserMovieService";
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
 import { getCurrentUser } from "../../services/AuthService";
-import LoadingContext from "../../store/LoadingContext";
+
 
 function MovieItemButtons(props) {
     const watchedContext = useContext(WatchedContext);
+
     const itemIsWatched = watchedContext.itemIsWatched(props.movie.id);
     const itemIsWantToWatch = watchedContext.itemIsWantToWatch(props.movie.id);
-    const [rating, setRating] = useState(props.userData && props.userData.rating ? props.userData.rating : '');
-    const [tempRating, setTempRating] = useState(props.userData && props.userData.rating ? props.userData.rating : '');
+    const [rating, setRating] = useState(
+        props.userData && props.userData.rating ? props.userData.rating : ""
+    );
+    const [tempRating, setTempRating] = useState(
+        props.userData && props.userData.rating ? props.userData.rating : ""
+    );
+    const [review, setReview] = useState(
+        props.userData && props.userData.review
+            ? props.userData.review.content
+            : ""
+    );
+    const [noRatingError, setNoRatingError] = useState("");
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const modalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        bgcolor: "background.paper",
+        border: "2px solid #000",
         boxShadow: 24,
-        p: 4,
+        p: 2,
     };
-    
+
     function updateWatchedCall() {
         const json = {
             userId: getCurrentUser().id,
             movieId: props.movie.id,
             watched: !itemIsWatched,
             wantToWatch: false,
-            rating: 0
+            rating: 0,
         };
         postUserMovie(json).then((res) => {});
     }
@@ -47,19 +60,20 @@ function MovieItemButtons(props) {
         const json = {
             userId: getCurrentUser().id,
             movieId: props.movie.id,
-            watched: tempRating ? true: itemIsWatched,
+            watched: tempRating ? true : itemIsWatched,
             wantToWatch: tempRating ? false : itemIsWantToWatch,
-            rating: tempRating ? tempRating : 0
+            rating: tempRating ? tempRating : 0,
+            review: review,
         };
         postUserMovie(json).then((res) => {
-            setModalIsOpen(false);
+            window.location.reload();
         });
     }
 
     function watchedHandler() {
         updateWatchedCall();
-        setTempRating('');
-        setRating('');
+        setTempRating("");
+        setRating("");
         if (itemIsWatched) {
             watchedContext.removeWatched(props.movie.id);
         } else {
@@ -74,15 +88,15 @@ function MovieItemButtons(props) {
             movieId: props.movie.id,
             watched: false,
             wantToWatch: !itemIsWantToWatch,
-            rating: 0
+            rating: 0,
         };
         postUserMovie(json).then((res) => {});
     }
 
     function wantToWatchHandler() {
         updateWantToWatchCall();
-        setTempRating('');
-        setRating('');
+        setTempRating("");
+        setRating("");
         if (itemIsWantToWatch) {
             watchedContext.removeWantToWatch(props.movie.id);
         } else {
@@ -93,7 +107,10 @@ function MovieItemButtons(props) {
 
     function ratingChangeHandler(e) {
         setTempRating(e.target.value);
-        
+    }
+
+    function reviewChangeHandler(e) {
+        setReview(e.target.value);
     }
 
     function handleClose() {
@@ -106,12 +123,11 @@ function MovieItemButtons(props) {
     }
 
     function rateSaveHandler() {
-        updateRatingCall();
-        setRating(tempRating);
-        if (!itemIsWatched && tempRating) {
-            watchedContext.addWatched(props.movie);
-            watchedContext.removeWantToWatch(props.movie.id);
+        if (review && !tempRating) {
+            setNoRatingError("You must rate to submit a review");
+            return;
         }
+        updateRatingCall();
     }
 
     const buttonStyle = {
@@ -155,10 +171,18 @@ function MovieItemButtons(props) {
                 </Button>
             )}
             <Button sx={buttonStyle} variant="outlined" onClick={handleOpen}>
-                { rating ? (<div>
-                    <span style={{ fontSize: "1.2rem", lineHeight: 1 }}>{rating}</span>
-                    <StarIcon sx={{ verticalAlign: "sub", marginLeft: "5px" }} /></div>) : "Rate"
-                }
+                {rating ? (
+                    <div>
+                        <span style={{ fontSize: "1.2rem", lineHeight: 1 }}>
+                            {rating}
+                        </span>
+                        <StarIcon
+                            sx={{ verticalAlign: "sub", marginLeft: "5px" }}
+                        />
+                    </div>
+                ) : (
+                    "Rate"
+                )}
             </Button>
             <Modal
                 open={modalIsOpen}
@@ -167,38 +191,68 @@ function MovieItemButtons(props) {
                 aria-describedby="parent-modal-description"
             >
                 <Box sx={modalStyle}>
-                    <FormControl
-                        size="small"
-                        sx={{ m: 1, minWidth: 120 }}
-                    >
-                        <InputLabel id="rating">
-                            Rating
-                        </InputLabel>
-                        <Select
-                            labelId="rating"
-                            id="rating-select"
-                            value={tempRating}
-                            label="rating"
-                            onChange={ratingChangeHandler}
+                    <FormControl size="small" sx={{ m: 1, minWidth: 400 }}>
+                
+                        <Box sx={{ width: "100px", margin: "0 auto" }}>
+                            <InputLabel
+                                sx={{ left: "auto", right: "auto" }}
+                                id="rating"
+                                
+                            >
+                                Rating
+                            </InputLabel>
+                            <Select
+                                sx={{ width: "100%" }}
+                                labelId="rating"
+                                id="rating-select"
+                                value={tempRating}
+                                label="rating"
+                                onChange={ratingChangeHandler}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((i) => {
+                                    return (
+                                        <MenuItem key={i}  value={i}>
+                                            {i + " "}
+                                            <StarIcon
+                                                sx={{
+                                                    verticalAlign: "sub",
+                                                    verticalAlign: "sub",
+                                                    marginLeft: "5px",
+                                                }}
+                                            />
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </Box>
+                        {noRatingError && <FormHelperText sx={{margin:"10px"}} error>{noRatingError}</FormHelperText>}
+                        <TextField
+                            sx={{ marginTop: "20px" }}
+                            size="small"
+                            onChange={reviewChangeHandler}
+                            value={review}
+                            fullWidth
+                            label={"Review"}
+                            variant="outlined"
+                            multiline
+                            minRows={4}
+                            maxRows={10}
+                        />
+                        <Button
+                            sx={{
+                                width: "50px",
+                                marginTop: "10px",
+                                marginLeft: "auto",
+                            }}
+                            variant="outlined"
+                            onClick={rateSaveHandler}
                         >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={1}>1 <StarIcon sx={{verticalAlign: "sub", verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={2}>2 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={3}>3 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={4}>4 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={5}>5 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={6}>6 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={7}>7 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={8}>8 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={9}>9 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                            <MenuItem value={10}>10 <StarIcon sx={{verticalAlign: "sub", marginLeft: "5px" }}/></MenuItem>
-                        </Select>
+                            Save
+                        </Button>
                     </FormControl>
-                    <Button sx={buttonStyle} variant="outlined" onClick={rateSaveHandler}>
-                Save
-            </Button>
                 </Box>
             </Modal>
         </div>
